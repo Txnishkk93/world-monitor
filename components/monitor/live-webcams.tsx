@@ -12,11 +12,11 @@ interface WebcamFeed {
 }
 
 const WEBCAM_FEEDS: WebcamFeed[] = [
-  { id: 'jerusalem1', location: 'Jerusalem, Israel', region: 'MIDEAST', embedUrl: 'https://www.youtube.com/live/77akujLn4k8?si=WVanaTGJ8X4SA-uX', status: 'live' },
-  { id: 'telaviv1', location: 'Tel Aviv, Israel', region: 'MIDEAST', embedUrl: 'https://www.youtube.com/live/qhhFRi8BcSU?si=Nsz8f0xfnV3xyqLx', status: 'live' },
-  { id: 'dubai1', location: 'Dubai, UAE', region: 'MIDEAST', embedUrl: 'https://www.youtube.com/live/MfIpyflPbHQ?si=RQDwP3yENngZyaMt', status: 'live' },
-  { id: 'london1', location: 'London, UK', region: 'EUROPE', embedUrl: 'https://www.youtube.com/embed/e-k-ZEsSKGA?autoplay=0&mute=1&controls=1&showinfo=0&rel=0&modestbranding=1', status: 'live' },
-  { id: 'taipei1', location: 'IRAN', region: 'MIDEAST', embedUrl: 'https://www.youtube.com/live/Pdwghh0hZ3E?si=C0SzkRBn66yuLqwX', status: 'live' },
+  { id: 'jerusalem1', location: 'Jerusalem, Israel', region: 'MIDEAST', embedUrl: 'https://www.youtube.com/embed/77akujLn4k8?autoplay=0&mute=1&controls=1&rel=0&modestbranding=1', status: 'live' },
+  { id: 'telaviv1', location: 'Tel Aviv, Israel', region: 'MIDEAST', embedUrl: 'https://www.youtube.com/embed/qhhFRi8BcSU?autoplay=0&mute=1&controls=1&rel=0&modestbranding=1', status: 'live' },
+  { id: 'dubai1', location: 'Dubai, UAE', region: 'MIDEAST', embedUrl: 'https://www.youtube.com/embed/4e0FdpZa5oA?si=X5A7zibIgg4u7HdA', status: 'live' },
+  { id: 'london1', location: 'London, UK', region: 'EUROPE', embedUrl: 'https://www.youtube.com/embed/8JCk5M_xrBs?si=M3-YrXM9R5LlZP2D', status: 'live' },
+  { id: 'taipei1', location: 'IRAN', region: 'MIDEAST', embedUrl: 'https://www.youtube.com/embed/Pdwghh0hZ3E?autoplay=0&mute=1&controls=1&rel=0&modestbranding=1', status: 'live' },
 ]
 
 const REGIONS = ['ALL', 'MIDEAST', 'EUROPE', 'AMERICAS', 'ASIA']
@@ -66,11 +66,10 @@ export default function LiveWebcams({ isExpanded, onToggleExpand }: LiveWebcamsP
           <button
             key={region}
             onClick={() => { setActiveRegion(region); setSelectedFeed(null) }}
-            className={`px-2.5 py-1 rounded text-[9px] font-bold tracking-wider border shrink-0 transition-colors ${
-              activeRegion === region
+            className={`px-2.5 py-1 rounded text-[9px] font-bold tracking-wider border shrink-0 transition-colors ${activeRegion === region
                 ? 'bg-[#dc2626] text-[#fff] border-[#dc2626]'
                 : 'border-transparent text-[#666] hover:text-[#999]'
-            }`}
+              }`}
           >
             {region}
           </button>
@@ -101,16 +100,14 @@ export default function LiveWebcams({ isExpanded, onToggleExpand }: LiveWebcamsP
       )}
 
       {/* Webcam grid */}
-      <div className={`flex-1 overflow-y-auto scrollbar-thin p-1.5 ${
-        gridMode === 'grid' ? 'grid grid-cols-2 gap-1.5' : 'flex flex-col gap-1.5'
-      }`}>
+      <div className={`flex-1 overflow-y-auto scrollbar-thin p-1.5 ${gridMode === 'grid' ? 'grid grid-cols-2 gap-1.5' : 'flex flex-col gap-1.5'
+        }`}>
         {filteredFeeds.map((feed) => (
           <button
             key={feed.id}
             onClick={() => setSelectedFeed(selectedFeed?.id === feed.id ? null : feed)}
-            className={`relative bg-[#000] rounded overflow-hidden aspect-video text-left group border transition-colors ${
-              selectedFeed?.id === feed.id ? 'border-[#ef4444]' : 'border-transparent hover:border-[#333]'
-            }`}
+            className={`relative bg-[#000] rounded overflow-hidden aspect-video text-left group border transition-colors ${selectedFeed?.id === feed.id ? 'border-[#ef4444]' : 'border-transparent hover:border-[#333]'
+              }`}
           >
             <iframe
               src={feed.embedUrl}
