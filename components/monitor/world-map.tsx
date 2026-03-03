@@ -206,7 +206,15 @@ export default function WorldMap() {
     }
 
     import('leaflet').then(async (L) => {
-      if (!mapContainerRef.current || mapRef.current) return
+      if (!mapContainerRef.current) return
+
+      // Destroy any stale Leaflet instance on this container (Strict Mode double-invoke)
+      const container = mapContainerRef.current as HTMLElement & { _leaflet_id?: number }
+      if (container._leaflet_id) {
+        container._leaflet_id = undefined
+      }
+
+      if (mapRef.current) return
 
       const map = L.default.map(mapContainerRef.current, {
         center: [20, 20],
@@ -253,10 +261,10 @@ export default function WorldMap() {
             const color = getSeverityColor(severity)
             const fillOpacity = getSeverityFillOpacity(severity)
             layer.on('mouseover', () => {
-              ;(layer as import('leaflet').Path).setStyle({ fillOpacity: fillOpacity + 0.25, weight: 2 })
+              ; (layer as import('leaflet').Path).setStyle({ fillOpacity: fillOpacity + 0.25, weight: 2 })
             })
             layer.on('mouseout', () => {
-              ;(layer as import('leaflet').Path).setStyle({ fillOpacity, weight: severity === 'high' ? 1.2 : 0.8 })
+              ; (layer as import('leaflet').Path).setStyle({ fillOpacity, weight: severity === 'high' ? 1.2 : 0.8 })
             })
             // Pass through click to map (don't block marker popups)
             void color
@@ -412,11 +420,10 @@ export default function WorldMap() {
             <button
               key={range}
               onClick={() => setSelectedRange(range)}
-              className={`px-2 py-1 rounded text-[9px] font-bold transition-colors ${
-                selectedRange === range
+              className={`px-2 py-1 rounded text-[9px] font-bold transition-colors ${selectedRange === range
                   ? 'bg-[#ef4444] text-[#000]'
                   : 'text-[#888] hover:text-[#ccc]'
-              }`}
+                }`}
             >
               {range}
             </button>
