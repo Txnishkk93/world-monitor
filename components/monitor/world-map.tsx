@@ -550,9 +550,10 @@ export default function WorldMap() {
         attributionControl: false,
       })
 
-      L.default.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; CARTO &copy; OpenStreetMap',
-      }).addTo(map)
+     L.default.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap contributors',
+  subdomains: 'abc',
+}).addTo(map)
 
       L.default.control.zoom({ position: 'topright' }).addTo(map)
 
